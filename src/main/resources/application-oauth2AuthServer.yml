@@ -1,0 +1,14 @@
+spring: 
+  application: 
+    name: oauth2AuthServer
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration,org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+server:
+  servlet: 
+    context-path: /oauth2AuthServer/v1.0
+  port: 8082
+#  tomcat: 
+#    remote_ip_header: x-forwarded-for
+#    protocol_header: x-forwarded-proto
+security: 
+  basic:
+    enabled: false

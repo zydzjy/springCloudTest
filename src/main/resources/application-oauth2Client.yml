@@ -1,0 +1,96 @@
+spring: 
+  application: 
+    name: springCloudService
+    autoconfigure.exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+  thymeleaf:
+    cache: false
+    #check-template: true
+    #check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    #classpath:/templates/
+    prefix: "file:E:\\Workspace\\source\\springCloud\\springCloudTest\\web\\templates\\"
+    suffix: .html
+ 
+server:
+  servlet: 
+    context-path: /springCloudService/v1.0
+#  tomcat: 
+#    remote_ip_header: x-forwarded-for
+#    protocol_header: x-forwarded-proto
+  port: 8080
+
+security:
+  basic:
+    enabled: false
+_security:
+  loginPage: /login/form
+  loginProcessingUrl: /login
+  defaultSuccessUrl: /home
+  successForwardUrl: /loginSuccess
+  failureUrl: /login/form?error
+  usernameParam: username
+  passwordParam: password
+  #cas
+  cas: 
+    casServerAddr: http://127.0.0.1:80
+    loginCallback: /casLogin
+    serviceURL: 
+      ${_security.cas.casServerAddr}${server.servlet.context-path}${_security.cas.loginCallback}
+    ticketValidatorServer: ${_security.cas.casServerAddr}/cas
+    loginServerURL: ${_security.cas.casServerAddr}/cas/login
+    loginFilterURL: ${_security.cas.loginCallback}
+
+_remoteServices: 
+  springCloudService1: 
+    TestRest: 
+      url: "/springCloudService/v1.0/testRest/{name}"
+feign:
+  okHttp: 
+    enabled: true#for okhttp client
+  #httpclient: enabled: true;#for appache http client
+  client:
+    config:
+      default: #for all feign clients
+      #feignName:# for specified name client
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+  hystrix:
+    enabled: true
+hystrix: 
+# To set thread isolation to SEMAPHORE
+  command:
+     default:
+       execution:
+         isolation:
+           thread: 
+             timeoutInMilliseconds: 50000
+           strategy: SEMAPHORE  
+eureka:
+  _serverAddr: http://127.0.0.1:8661/eureka
+  instance: 
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    #statusPageUrlPath: ${server.servletPath}/info
+    #healthCheckUrlPath: ${server.servletPath}/health
+  client:
+    enabled: false
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:  
+      defaultZone: ${eureka._serverAddr}
+    healthcheck: 
+      enabled: true
+_oauth2Client:  
+  rescTestUrl: http://localhost:8083/oauth2RescServer/v1.0/testRest/aaa
+  myResc: 
+    id: rescId
+    clientId: client
+    clientSecret: clientSec
+    userAuthorizationUri: http://localhost:8082/oauth2AuthServer/v1.0/oauth/authorize
+    grantType: client_credentials
+    clientAuthenticationScheme: form
+    scope: app
+    accessTokenUri: http://localhost:8082/oauth2AuthServer/v1.0/oauth/token

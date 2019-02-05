@@ -1,0 +1,8 @@
+#conditional configurations
+_CONFIG: 
+  CASCLIENT: false
+  WEBSECURITY: false
+  OAUTH2RESCSERVER: false
+  OAUTH2CLIENT: false
+  EUREKASERVER: false
+  OAUTH2AUTHSERVER: false

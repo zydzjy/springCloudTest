@@ -1,0 +1,15 @@
+spring: 
+  cloud: 
+    #zookeeper
+    zookeeper: 
+      enabled: true  # true:开启zookeeper外部化配置, false:读取本地配置;
+      connect-string: "localhost:2181"
+      config:
+        enabled: true
+        root: serviceCfgs
+        defaultContext: springCloudService1
+        profileSeparator: '-'
+        watcher:
+          enabled: true
+      discovery: 
+        register: false

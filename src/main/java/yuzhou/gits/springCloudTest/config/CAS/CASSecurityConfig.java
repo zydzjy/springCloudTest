@@ -6,13 +6,9 @@ import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -23,13 +19,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import yuzhou.gits.springCloudTest.service.springSecurity.CustomUserAuthenticationProvider;
 import yuzhou.gits.springCloudTest.service.springSecurity.CustomUserDetailsService;
-import yuzhou.gits.springCloudTest.service.springSecurity.CustomUsernamePasswordAuthenticationFilter;
 
 
 @ConditionalOnExpression("${_CONFIG.CASCLIENT:false}")
@@ -109,9 +100,6 @@ public class CASSecurityConfig extends WebSecurityConfigurerAdapter {
 		 http.csrf().disable(); 
 		 //关闭spring security默认的frame访问限制 
 		 http.headers().frameOptions().sameOrigin();
-		
-		
-		
 	}
 
 	public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
@@ -121,8 +109,6 @@ public class CASSecurityConfig extends WebSecurityConfigurerAdapter {
 		return casAuthenticationEntryPoint;
 	}
 	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	PasswordEncoder passwordEncoder;
 }

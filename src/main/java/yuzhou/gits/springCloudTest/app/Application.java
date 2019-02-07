@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 
 @SpringBootApplication
-//@EnableFeignClients(basePackages="yuzhou.gits.springCloudTest.controller")
-@ComponentScan("yuzhou.gits.springCloudTest")
+@EnableFeignClients(basePackages = "yuzhou.gits.springCloudTest.controller.feign")
+@ComponentScan("yuzhou.gits.springCloudTest.*")
 public class Application {
 	
 	public static void main(String[] args) {

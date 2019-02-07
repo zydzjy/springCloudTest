@@ -2,11 +2,20 @@ spring:
   application: 
     name: eurekaServer
   autoconfigure.exclude: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration
+  #org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  security:
+    user:
+      name: "eurekaUser"
+      _originalPwd: "eurekaPwd"
+      password: "$2a$10$xFBzhHiQ0rB0B.QK8dkH5eSzZeVqxzqfRccSX/PbFOg9XWn48.X8S"
+    basic:  
+      enabled: true
+
 server: 
   port: 8081
 #  servlet: 
 #    context-path: /eureka/v1.0/
-  
+
 eureka:
   server:
     enableSelfPreservation: false
@@ -19,4 +28,4 @@ eureka:
     fetchRegistry: false
     serviceUrl:
       defaultZone: 
-        http://${eureka.instance.hostname}:${server.port}/eureka/
+        http://${spring.security.user.name}:${spring.security.user._originalPwd}@${eureka.instance.hostname}:${server.port}/eureka/

@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 @ConditionalOnExpression("${_CONFIG.OAUTH2RESCSERVER:false}")
 @Configuration
-//@EnableEurekaClient
+@EnableDiscoveryClient
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	//private static final String DEMO_RESOURCE_ID = "rescId";
@@ -61,6 +61,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**").authenticated();
+		http.authorizeRequests().antMatchers("/somePublic/**").permitAll()
+		.antMatchers("/somePrivacy/**").authenticated();
 	}
 }

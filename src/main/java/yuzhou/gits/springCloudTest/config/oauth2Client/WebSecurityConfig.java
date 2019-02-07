@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		customUserAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+		customUserAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 		auth.authenticationProvider(customUserAuthenticationProvider);
 	}
 
@@ -66,10 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${_security.defaultSuccessUrl}")
 	private String defaultSuccessUrl;
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {

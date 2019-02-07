@@ -35,7 +35,12 @@ public class CustomUserAuthenticationProvider implements AuthenticationProvider 
 		String extToken = token.getExtToken();
 		SystemUser user = null;
 		if (userName != null) {
-			user = this.userServiceImpl.getUserByLoginName(userName);
+			try {
+				user = this.userServiceImpl.getUserByLoginName(userName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username/password");

@@ -4,5 +4,5 @@ import yuzhou.gits.springCloudTest.bean.SystemUser;
 
 public interface UserService {
 
-	public SystemUser getUserByLoginName(String loginName);
+	public SystemUser getUserByLoginName(String loginName) throws Exception;
 }

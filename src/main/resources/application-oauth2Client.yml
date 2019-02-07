@@ -1,7 +1,7 @@
 spring: 
   application: 
     name: springCloudService
-    autoconfigure.exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+#    autoconfigure.exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
   thymeleaf:
     cache: false
     #check-template: true
@@ -43,11 +43,13 @@ _security:
     loginServerURL: ${_security.cas.casServerAddr}/cas/login
     loginFilterURL: ${_security.cas.loginCallback}
 
-_remoteServices: 
-  springCloudService1: 
-    TestRest: 
-      url: "/springCloudService/v1.0/testRest/{name}"
+_feign: "/oauth2RescServer/v1.0/somePublic/{name}"
+#  OAUTH2RESCSERVER: 
+#    somePublicEndPoint: 
+#      url: /oauth2RescServer/v1.0/somePublic/{name}
 feign:
+  oauth2: 
+    enabled: false
   okHttp: 
     enabled: true#for okhttp client
   #httpclient: enabled: true;#for appache http client
@@ -59,7 +61,7 @@ feign:
         readTimeout: 5000
         loggerLevel: full
   hystrix:
-    enabled: true
+    enabled: false
 hystrix: 
 # To set thread isolation to SEMAPHORE
   command:
@@ -70,19 +72,13 @@ hystrix:
              timeoutInMilliseconds: 50000
            strategy: SEMAPHORE  
 eureka:
-  _serverAddr: http://127.0.0.1:8661/eureka
-  instance: 
-    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-    #statusPageUrlPath: ${server.servletPath}/info
-    #healthCheckUrlPath: ${server.servletPath}/health
+  _zone1: http://eurekaUser:eurekaPwd@localhost:8081/eureka
   client:
-    enabled: false
-    registerWithEureka: true
+    enabled: true
+    registerWithEureka: false
     fetchRegistry: true
     serviceUrl:  
-      defaultZone: ${eureka._serverAddr}
-    healthcheck: 
-      enabled: true
+      defaultZone: ${eureka._zone1}
 _oauth2Client:  
   rescTestUrl: http://localhost:8083/oauth2RescServer/v1.0/testRest/aaa
   myResc: 

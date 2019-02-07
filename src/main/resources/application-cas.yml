@@ -1,0 +1,57 @@
+spring: 
+  application: 
+    name: springCas
+  thymeleaf:
+    cache: false
+    #check-template: true
+    #check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    #classpath:/templates/
+    prefix: "file:E:\\Workspace\\source\\springCloud\\springCloudTest\\web\\templates\\"
+    suffix: .html
+ 
+server:
+  port: 8085
+  servlet: 
+    context-path: /springCas/v1.0
+#  tomcat: 
+#    remote_ip_header: x-forwarded-for
+#    protocol_header: x-forwarded-proto
+security:
+  basic:
+    enabled: false
+_security:
+  loginPage: /login/form
+  loginProcessingUrl: /login
+  defaultSuccessUrl: /home
+  successForwardUrl: /loginSuccess
+  failureUrl: /login/form?error
+  usernameParam: username
+  passwordParam: password
+  #cas
+  cas: 
+    casServerAddr: http://127.0.0.1:80
+    loginCallback: /casLogin
+    serviceURL: 
+      ${_security.cas.casServerAddr}${server.servlet.context-path}${_security.cas.loginCallback}
+    ticketValidatorServer: ${_security.cas.casServerAddr}/cas
+    loginServerURL: ${_security.cas.casServerAddr}/cas/login
+    loginFilterURL: ${_security.cas.loginCallback}
+eureka:
+  _zone1: http://eurekaUser:eurekaPwd@localhost:8081/eureka
+  instance: 
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    #statusPageUrlPath: ${server.servletPath}/info
+    #healthCheckUrlPath: ${server.servletPath}/health
+  client:
+    enabled: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:  
+      defaultZone: ${eureka._zone1}
+    healthcheck: 
+      enabled: true
+    

@@ -1,7 +1,13 @@
 package yuzhou.gits.springCloudTest.bean;
 
-public class SystemUser {
+import java.io.Serializable;
 
+public class SystemUser implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8102471002918298666L;
 	private long userId;
 	private String loginName;
 	private String loginPwd;
@@ -29,6 +35,9 @@ public class SystemUser {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String toString() {
+		return email;
 	}
 	
 }

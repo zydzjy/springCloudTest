@@ -1,7 +1,8 @@
 spring: 
   application: 
     name: oauth2RescServer
-  autoconfigure.exclude: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration,org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration
+  #,org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
 server: 
   servlet: 
     context-path: /oauth2RescServer/v1.0
@@ -10,7 +11,7 @@ server:
 #    remote_ip_header: x-forwarded-for
 #    protocol_header: x-forwarded-proto
 eureka:
-  _serverAddr: http://127.0.0.1:8081/eureka/
+  _zone1: http://eurekaUser:eurekaPwd@localhost:8081/eureka
   instance: 
     instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
     #statusPageUrlPath: ${server.servletPath}/info
@@ -18,9 +19,9 @@ eureka:
   client:
     enabled: true
     registerWithEureka: true
-    fetchRegistry: true
+    fetchRegistry: false
     serviceUrl:  
-      defaultZone: http://localhost:8081/eureka/
+      defaultZone: ${eureka._zone1}
     healthcheck: 
       enabled: true
 _oauth2Auth:   

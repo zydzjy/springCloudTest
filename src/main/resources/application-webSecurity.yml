@@ -1,0 +1,42 @@
+spring: 
+  application: 
+    name: springWebSecurity
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration,org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  thymeleaf:
+    cache: false
+    #check-template: true
+    #check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    #classpath:/templates/
+    prefix: "file:E:\\Workspace\\source\\springCloud\\springCloudTest\\web\\templates\\"
+    suffix: .html
+ 
+server:
+  port: 8086
+  servlet: 
+    context-path: /springWebSecurity/v1.0
+_security:
+  loginPage: /login/form
+  loginProcessingUrl: /login
+  defaultSuccessUrl: /home
+  successForwardUrl: /loginSuccess
+  failureUrl: /login/form?error
+  usernameParam: username
+  passwordParam: password
+eureka:
+  _zone1: http://eurekaUser:eurekaPwd@localhost:8081/eureka
+  instance: 
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    #statusPageUrlPath: ${server.servletPath}/info
+    #healthCheckUrlPath: ${server.servletPath}/health
+  client:
+    enabled: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:  
+      defaultZone: ${eureka._zone1}
+    healthcheck: 
+      enabled: false

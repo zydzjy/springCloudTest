@@ -42,13 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         super.configure(http);
     }
 	
-	@Value("${spring.security.user.name}")
-	private String user;
-	@Value("${spring.security.user.password}")
-	private String password;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+//	@Value("${spring.security.user.name}")
+//	private String user;
+//	@Value("${spring.security.user.password}")
+//	private String password;
+//	
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 	
 //	@Override
 //	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

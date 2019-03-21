@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import yuzhou.gits.springCloudTest.bean.SystemUser;
 import yuzhou.gits.springCloudTest.service.UserService;
 
-@ConditionalOnExpression("${_CONFIG.OAUTH2CLIENT:false}")
+@ConditionalOnExpression("${_CONFIG.OAUTH2CLIENT:false} || ${_CONFIG.WEBSECURITY:false}")
 @Component("customUserAuthenticationProvider")
 public class CustomUserAuthenticationProvider implements AuthenticationProvider {
 	private PasswordEncoder passwordEncoder;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +17,10 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+
+import yuzhou.gits.springSecurityExts.MyAccessDecisionManager;
+import yuzhou.gits.springSecurityExts.MyFilterSecurityInterceptor;
 
 @ConditionalOnExpression("${_CONFIG.OAUTH2RESCSERVER:false}")
 @Configuration
@@ -58,10 +63,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		DefaultAccessTokenConverter converter = new DefaultAccessTokenConverter();
 		return converter;
 	}
-	
+	 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/somePublic/**").permitAll()
+		http.authorizeRequests()/*.antMatchers("/somePublic/**").permitAll() */
 		.antMatchers("/somePrivacy/**").authenticated();
 	}
 }

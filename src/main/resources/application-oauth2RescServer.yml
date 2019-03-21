@@ -17,8 +17,8 @@ eureka:
     #statusPageUrlPath: ${server.servletPath}/info
     #healthCheckUrlPath: ${server.servletPath}/health
   client:
-    enabled: true
-    registerWithEureka: true
+    enabled: false
+    registerWithEureka: false
     fetchRegistry: false
     serviceUrl:  
       defaultZone: ${eureka._zone1}
